@@ -1,5 +1,6 @@
 import express from 'express'
 
+require('dotenv').config()
 const app = express()
 
 app.use(express.json()) // middleware que transforma la req.body a un JSON
