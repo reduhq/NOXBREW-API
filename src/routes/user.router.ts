@@ -1,12 +1,14 @@
-import express from 'express'
+import express, {Request, Response} from 'express'
 import * as userService from './../services/user.service'
+import { createUserValidator } from '../validators/user.validator'
 
 export const userRouter = express.Router()
 
 //POST: Create a new User
 userRouter.post(
     '/',
-    async (req, res)=>{
+    createUserValidator,
+    async (req:Request, res:Response)=>{
         try{
             const {email, phone, username, password} = req.body
             const newUser = await userService.createUser({
