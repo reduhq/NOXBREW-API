@@ -21,10 +21,11 @@ enum ROLE{
 
 model User{
   id Int @id @default(autoincrement())
-  username String
+  username String @unique
   password String @db.VarChar(60)
   email String
   role ROLE @default(CLIENT)
   phone String
   createdAt DateTime @default(now())
+  @@index([username])
 }
