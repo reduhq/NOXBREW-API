@@ -23,9 +23,22 @@ model User{
   id Int @id @default(autoincrement())
   username String @unique
   password String @db.VarChar(60)
-  email String
+  email String @unique
   role ROLE @default(CLIENT)
   phone String
-  createdAt DateTime @default(now())
+  created_at DateTime @default(now())
   @@index([username])
+
+  client Client?
+}
+
+model Client{
+  id Int @id @default(autoincrement())
+  user_id Int @unique
+  name String
+  lastname String
+  birthdate DateTime?
+  adress String?
+
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }

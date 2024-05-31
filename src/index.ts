@@ -1,6 +1,7 @@
 import express from 'express'
 import {userRouter} from './routes/user.router'
 import { loginRouter } from './routes/login.router'
+import { clientRouter } from './routes/client.router'
 
 require('dotenv').config()
 const app = express()
@@ -8,6 +9,7 @@ const app = express()
 app.use(express.json()) // middleware que transforma la req.body a un JSON
 app.use('/api/v1/user', userRouter)
 app.use('/api/v1', loginRouter)
+app.use('/api/v1/client', clientRouter)
 
 const PORT = 3000
 

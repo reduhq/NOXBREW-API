@@ -19,7 +19,7 @@ userRouter.post(
             })
             return res.status(201).json(newUser)
         }catch(error:any){
-            return res.status(500).json(error.message)
+            return res.status(500).json(error)
         }
     }
 )

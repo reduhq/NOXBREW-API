@@ -28,7 +28,7 @@ export const createUser = async (user:UserCreate)=>{
             username:true,
             email:true,
             phone:true,
-            createdAt:true
+            created_at:true
         }
     })
 }
