@@ -1,7 +1,5 @@
 import {sign} from 'jsonwebtoken'
-import {Settings} from './config'
-
-const settings = new Settings()
+import {settings} from './config'
 
 export function create_access_token(
     subject:string | number,
@@ -18,6 +16,5 @@ export function create_access_token(
         "sub": subject.toString()
     }
     const encoded_jwt = sign(to_encode, settings.SECRET_KEY)
-    console.log(settings.SECRET_KEY)
-    console.log(encoded_jwt)
+    return encoded_jwt
 }
