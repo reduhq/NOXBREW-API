@@ -1,6 +1,7 @@
 import { User } from '@prisma/client'
 import { UserCreate } from '../types/user.types'
 import {db} from './../db/db.server'
+import { hashPassword, validatePassword } from '../core/security'
 
 export const getById = async (id:number)=>{
     return db.user.findUnique({
@@ -17,6 +18,7 @@ export const getByUsername = async (username:string):Promise<User|null>=>{
 }
 
 export const createUser = async (user:UserCreate)=>{
+    user.password = await hashPassword(user.password)
     return await db.user.create({
         data:{
             ...user
@@ -34,6 +36,7 @@ export const createUser = async (user:UserCreate)=>{
 export const authenticate = async(username:string, password:string)=>{
     const user = await getByUsername(username)
     if(!user) return null
-    if(password != user.password) return null
+    const compare = await validatePassword(password, user.password) 
+    if(!compare) return null
     return user
 }
