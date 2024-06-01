@@ -41,4 +41,24 @@ model Client{
   adress String?
 
   user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  favorite Favorite[]
+}
+
+model Drink{
+  id Int @id @default(autoincrement())
+  name String
+  price Float
+  description String
+  image String
+
+  favorite Favorite[]
+}
+
+model Favorite{
+  id Int @id @default(autoincrement())
+  client_id Int
+  drink_id Int
+
+  client Client @relation(fields: [client_id], references: [id], onDelete: Cascade)
+  drink Drink @relation(fields: [drink_id], references: [id], onDelete: Cascade)
 }

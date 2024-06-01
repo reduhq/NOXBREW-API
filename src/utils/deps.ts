@@ -1,16 +1,18 @@
-import {verify} from 'jsonwebtoken'
-import {settings} from './../core/config'
-import {getUser} from './../services/user.service'
+// import {verify} from 'jsonwebtoken'
+// import {settings} from './../core/config'
+// import {getUser} from './../services/user.service'
+// import { NextFunction, Request, Response } from 'express'
 
-export function get_current_user(
-    token: string
-){
-    // decoding the JWT
-    const payload = verify(token, settings.SECRET_KEY)
-    const user_id = parseInt(payload.sub as string)
+// export const verifyJWT = (req:Request, res:Response, next:NextFunction)=>{
+//     const token = req.headers.authorization
+//     console.log(token)
+// }
 
-    // Getting the user by id
-    const user = getUser(user_id)
-    return user
-    // throw new Error('message')
-}
+// export function get_current_user(
+//     token: string
+// ){
+//     // decoding the JWT
+//     const payload = verify(token, settings.SECRET_KEY)
+//     const user_id = parseInt(payload.sub as string)
+
+// }
