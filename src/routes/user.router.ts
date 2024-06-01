@@ -10,10 +10,9 @@ userRouter.post(
     createUserValidator,
     async (req:Request, res:Response)=>{
         try{
-            const {email, phone, username, password} = req.body
+            const {email, username, password} = req.body
             const newUser = await userService.createUser({
-                email, 
-                phone, 
+                email,
                 username, 
                 password
             })

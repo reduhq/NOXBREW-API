@@ -25,7 +25,7 @@ model User{
   password String @db.VarChar(60)
   email String @unique
   role ROLE @default(CLIENT)
-  phone String
+  phone String?
   created_at DateTime @default(now())
   @@index([username])
 

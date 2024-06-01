@@ -20,12 +20,6 @@ export const createClientValidator = [
     .isString()
     .isEmail(),
 
-    check('user.phone')
-    .exists()
-    .isString()
-    .not()
-    .isEmpty(),
-
     check('client.name')
     .exists()
     .isString()

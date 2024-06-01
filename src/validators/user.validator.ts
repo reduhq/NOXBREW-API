@@ -20,12 +20,6 @@ export const createUserValidator = [
     .isString()
     .isEmail(),
 
-    check('phone')
-    .exists()
-    .isString()
-    .not()
-    .isEmpty(),
-
     (req:Request, res:Response, next:NextFunction)=>{
         validateResult(req, res, next)
     }

@@ -16,4 +16,4 @@ export interface User{
     createdAt:Date
 }
 
-export type UserCreate = Omit<User, 'id'|'role'|'createdAt'>
+export type UserCreate = Omit<User, 'id'|'role'|'createdAt'|'phone'>
