@@ -6,9 +6,13 @@ import { clientRouter } from './routes/client.router'
 
 require('dotenv').config()
 const app = express()
-const whiteList = ['http://localhost:3000',]
 
-app.use(cors({origin:whiteList}))
+app.use(cors({
+    origin:process.env.BACKEND_CORS_ORIGIN, 
+    credentials: true,
+    // methods: '*',
+    // allowedHeaders: '*'
+}))
 app.use(express.json()) // middleware que transforma la req.body a un JSON
 app.use('/api/v1/user', userRouter)
 app.use('/api/v1', loginRouter)
