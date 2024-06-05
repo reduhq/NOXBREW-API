@@ -44,13 +44,22 @@ model Client{
   favorite Favorite[]
 }
 
+model DrinkType{
+  id Int @id @default(autoincrement())
+  name String 
+
+  drink Drink[]
+}
+
 model Drink{
   id Int @id @default(autoincrement())
+  drink_type_id Int
   name String
   price Float
   description String
   image String
 
+  drink_type DrinkType @relation(fields: [drink_type_id], references: [id], onDelete: Cascade)
   favorite Favorite[]
 }
 
