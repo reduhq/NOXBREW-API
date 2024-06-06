@@ -16,3 +16,21 @@ export const getAllDrinks = async()=>{
         }
     })
 }
+
+export const getDrinkByName = async(name:string) =>{
+    return db.drink.findFirst({
+        where:{
+            name:{
+                equals:name,
+                mode:'insensitive'
+            }
+        },
+        select:{
+            id:true,
+            name:true,
+            description:true,
+            price:true,
+            image:true
+        }
+    })
+}
