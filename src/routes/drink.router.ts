@@ -1,10 +1,17 @@
 import express from 'express'
-import { getAllDrinks, getDrinkByName } from '../services/drink.service'
+import { getAllPrivateDrinks, getAllPublicDrinks, getDrinkByName } from '../services/drink.service'
+import { getCurrentClient, verifyJWT } from '../utils/deps'
 
 export const drinkRouter = express.Router()
 
-drinkRouter.get('/', async(_req, res)=>{
-    const drinks = await getAllDrinks()
+drinkRouter.get('/public', async(_req, res)=>{
+    const drinks = await getAllPublicDrinks()
+    return res.status(200).json(drinks)
+})
+
+drinkRouter.get('/private', verifyJWT, getCurrentClient, async(_req, res)=>{
+    const {client_model} = res.locals
+    const drinks = await getAllPrivateDrinks(client_model.id)
     return res.status(200).json(drinks)
 })
 
