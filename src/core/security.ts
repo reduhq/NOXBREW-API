@@ -8,9 +8,9 @@ export function create_access_token(
 ){
     let expire
     if(expires_delta){
-        expire = Date.now() + expires_delta
+        expire = Math.floor(Date.now()/1000) + expires_delta
     }else{
-        expire = Date.now() + settings.ACCESS_TOKEN_EXPIRES_MINUTES
+        expire = Math.floor(Date.now()/1000) + settings.ACCESS_TOKEN_EXPIRES_MINUTES
     }
     const to_encode = {
         "exp": expire,

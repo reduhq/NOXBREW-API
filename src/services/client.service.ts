@@ -28,5 +28,19 @@ export const createClient = async(client:ClientCreate, user:UserCreate)=>{
             }
         }
     })
+}
 
+export const getCLientById = async(user_id:number)=>{
+    return db.client.findUnique({
+        where:{
+            user_id:user_id
+        },
+        select:{
+            id:true,
+            name:true,
+            lastname:true,
+            adress:true,
+            birthdate:true
+        }
+    })
 }

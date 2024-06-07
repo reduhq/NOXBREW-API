@@ -1,18 +1,22 @@
-// import {verify} from 'jsonwebtoken'
-// import {settings} from './../core/config'
-// import {getUser} from './../services/user.service'
-// import { NextFunction, Request, Response } from 'express'
+import {verify} from 'jsonwebtoken'
+import {settings} from './../core/config'
+import { NextFunction, Request, Response } from 'express'
+import { getCLientById } from '../services/client.service'
 
-// export const verifyJWT = (req:Request, res:Response, next:NextFunction)=>{
-//     const token = req.headers.authorization
-//     console.log(token)
-// }
+export const verifyJWT = (req:Request, res:Response, next:NextFunction)=>{
+    const token = req.headers.authorization
+    if(!token) return res.status(403).json('Usuario no autorizado')
+    try {
+        const valid_token = verify(token.split(" ")[1], settings.SECRET_KEY)
+        res.locals.user_id = parseInt(valid_token.sub as string, 10)
+    } catch (error:any) {
+        return res.status(500).json("Token invalido")
+    }
+    return next()
+}
 
-// export function get_current_user(
-//     token: string
-// ){
-//     // decoding the JWT
-//     const payload = verify(token, settings.SECRET_KEY)
-//     const user_id = parseInt(payload.sub as string)
-
-// }
+export const getCurrentClient = async(_req:Request, res:Response, next:NextFunction)=>{
+    const user_id = res.locals.user_id
+    res.locals.client_model = await getCLientById(user_id)
+    next()
+}
