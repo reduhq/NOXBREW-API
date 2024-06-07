@@ -1,6 +1,6 @@
 import {db} from './../db/db.server'
 
-export const getAllDrinks = async()=>{
+export const getAllPublicDrinks = async()=>{
     return db.drink.findMany({
         select:{
             id:true,
@@ -11,6 +11,33 @@ export const getAllDrinks = async()=>{
             drink_type:{
                 select:{
                     name:true
+                }
+            },
+        }
+    })
+}
+
+export const getAllPrivateDrinks = async(client_id:number) =>{
+    return db.drink.findMany({
+        select:{
+            id:true,
+            name:true,
+            description:true,
+            image:true,
+            price:true,
+            drink_type:{
+                select:{
+                    name:true
+                }
+            },
+            favorite:{
+                select:{
+                    id:true,
+                    client_id:true,
+                    drink_id:true
+                },
+                where:{
+                    client_id:client_id
                 }
             }
         }
