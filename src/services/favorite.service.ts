@@ -16,8 +16,25 @@ export const createFavorite = async (client_id:number, drink_id:number) =>{
 export const getFavorites = async(client_id:number)=>{
     return db.favorite.findMany({
         select:{
-            id:true,
-            drink:true
+            drink:{
+                select:{
+                    id:true,
+                    name:true,
+                    description:true,
+                    price:true,
+                    image:true,
+                    drink_type:{
+                        select:{
+                            name:true
+                        }
+                    },
+                    favorite:{
+                        select:{
+                            id:true
+                        }
+                    }
+                }
+            }
         },
         where:{
             client_id:client_id
