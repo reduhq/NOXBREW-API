@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express'
 import { getCurrentClient, verifyJWT } from '../utils/deps'
-import { createFavorite, getFavorites } from '../services/favorite.service'
+import { createFavorite, deleteFavorite, getFavorites } from '../services/favorite.service'
 
 export const favoriteRouter = express.Router() 
 
@@ -14,4 +14,10 @@ favoriteRouter.get("/", verifyJWT, getCurrentClient, async(_req, res)=>{
     const {client_model} = res.locals
     const favs = await getFavorites(client_model.id)
     return res.status(200).json(favs)
+})
+
+favoriteRouter.delete('/:favorite_id', verifyJWT, getCurrentClient, async(req, res)=>{
+    const {favorite_id} = req.params
+    const deletedFav = await deleteFavorite(parseInt(favorite_id))
+    return res.status(200).json(deletedFav)
 })
