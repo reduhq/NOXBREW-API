@@ -1,7 +1,7 @@
 import {verify} from 'jsonwebtoken'
 import {settings} from './../core/config'
 import { NextFunction, Request, Response } from 'express'
-import { getCLientById } from '../services/client.service'
+import { getClientById } from '../services/client.service'
 
 export const verifyJWT = (req:Request, res:Response, next:NextFunction)=>{
     const token = req.headers.authorization
@@ -17,6 +17,6 @@ export const verifyJWT = (req:Request, res:Response, next:NextFunction)=>{
 
 export const getCurrentClient = async(_req:Request, res:Response, next:NextFunction)=>{
     const user_id = res.locals.user_id
-    res.locals.client_model = await getCLientById(user_id)
+    res.locals.client_model = await getClientById(user_id)
     next()
 }
