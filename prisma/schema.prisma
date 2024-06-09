@@ -42,6 +42,7 @@ model Client{
 
   user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
   favorite Favorite[]
+  cart Cart[]
 }
 
 model DrinkType{
@@ -61,9 +62,19 @@ model Drink{
 
   drink_type DrinkType @relation(fields: [drink_type_id], references: [id], onDelete: Cascade)
   favorite Favorite[]
+  cart Cart[]
 }
 
 model Favorite{
+  id Int @id @default(autoincrement())
+  client_id Int
+  drink_id Int
+
+  client Client @relation(fields: [client_id], references: [id], onDelete: Cascade)
+  drink Drink @relation(fields: [drink_id], references: [id], onDelete: Cascade)
+}
+
+model Cart{
   id Int @id @default(autoincrement())
   client_id Int
   drink_id Int
