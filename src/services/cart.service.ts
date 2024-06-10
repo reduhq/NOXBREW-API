@@ -1,3 +1,4 @@
+import { cartUpdate } from '../types/cart.types'
 import {db} from './../db/db.server'
 
 export const createCart = async(client_id:number, drink_id:number)=>{
@@ -34,6 +35,17 @@ export const getAllCart = async(client_id:number)=>{
         },
         where:{
             client_id
+        }
+    })
+}
+
+export const updateCart = async(cart:cartUpdate) =>{
+    db.cart.update({
+        data:{
+            quantity:cart.quantity
+        },
+        where:{
+            id:cart.id
         }
     })
 }
