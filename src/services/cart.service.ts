@@ -18,6 +18,7 @@ export const createCart = async(client_id:number, drink_id:number)=>{
 export const getAllCart = async(client_id:number)=>{
     return db.cart.findMany({
         select:{
+            id:true,
             drink:{
                 select:{
                     id:true,
@@ -46,6 +47,17 @@ export const updateCart = async(cart:cartUpdate) =>{
         },
         where:{
             id:cart.id
+        }
+    })
+}
+
+export const deleteCart = async(id:number)=>{
+    return await db.cart.delete({
+        where:{
+            id
+        },
+        select:{
+            id:true
         }
     })
 }

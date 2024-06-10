@@ -1,6 +1,6 @@
 import express from 'express'
 import { getCurrentClient, verifyJWT } from '../utils/deps'
-import { createCart, getAllCart, updateCart } from '../services/cart.service'
+import { createCart, deleteCart, getAllCart, updateCart } from '../services/cart.service'
 import { cartUpdate } from '../types/cart.types'
 
 export const cartRouter = express.Router()
@@ -26,4 +26,10 @@ cartRouter.put('/', verifyJWT, getCurrentClient, async(req, res)=>{
     }
     const updatedCart = await updateCart(cart)
     return res.status(200).json(updatedCart)
+})
+
+cartRouter.delete('/:id', verifyJWT, getCurrentClient, async(req, res)=>{
+    const {id} = req.params
+    const deletedCart = await deleteCart(parseInt(id))
+    return res.status(200).json(deletedCart)
 })
