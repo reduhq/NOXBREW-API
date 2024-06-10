@@ -6,6 +6,7 @@ import { clientRouter } from './routes/client.router'
 import { drinkRouter } from './routes/drink.router'
 import { favoriteRouter } from './routes/favorite.router'
 import { cartRouter } from './routes/cart.router'
+import { salesRouter } from './routes/sales.router'
 
 require('dotenv').config()
 const app = express()
@@ -23,6 +24,7 @@ app.use('/api/v1/client', clientRouter)
 app.use('/api/v1/drink', drinkRouter)
 app.use('/api/v1/favorite', favoriteRouter)
 app.use('/api/v1/cart', cartRouter)
+app.use('/api/v1/sales', salesRouter)
 
 const PORT = 8000
 
