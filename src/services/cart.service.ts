@@ -32,7 +32,8 @@ export const getAllCart = async(client_id:number)=>{
                         }
                     },
                 }
-            }
+            },
+            quantity:true
         },
         where:{
             client_id
@@ -41,7 +42,7 @@ export const getAllCart = async(client_id:number)=>{
 }
 
 export const updateCart = async(cart:cartUpdate) =>{
-    db.cart.update({
+    return await db.cart.update({
         data:{
             quantity:cart.quantity
         },
