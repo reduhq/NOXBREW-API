@@ -1,11 +1,12 @@
 import { cartUpdate } from '../types/cart.types'
 import {db} from './../db/db.server'
 
-export const createCart = async(client_id:number, drink_id:number)=>{
+export const createCart = async(client_id:number, drink_id:number, quantity:number)=>{
     return db.cart.create({
         data:{
             client_id,
-            drink_id
+            drink_id,
+            quantity
         },
         select:{
             id:true,
