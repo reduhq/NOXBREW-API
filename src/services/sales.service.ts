@@ -34,3 +34,27 @@ export const createSale = async(client_id:number)=>{
         data:items
     }) 
 }
+
+export const getAllSales = async(client_id:number)=>{
+    return await db.sales.findMany({
+        select:{
+            id:true,
+            date:true,
+            drink:{
+                select:{
+                    id:true,
+                    name:true,
+                    image:true
+                }
+            },
+            quantity:true,
+            price:true
+        },
+        where:{
+            client_id
+        },
+        orderBy:{
+            date:'desc'
+        }
+    })
+}
