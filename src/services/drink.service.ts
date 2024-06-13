@@ -1,7 +1,7 @@
 import {db} from './../db/db.server'
 
 export const getAllPublicDrinks = async()=>{
-    return db.drink.findMany({
+    return await db.drink.findMany({
         select:{
             id:true,
             name:true,
