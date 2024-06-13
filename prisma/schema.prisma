@@ -43,7 +43,7 @@ model Client{
   user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
   favorite Favorite[]
   cart Cart[]
-  sales Sales[]
+  sales Sale[]
 }
 
 model DrinkType{
@@ -64,7 +64,7 @@ model Drink{
   drink_type DrinkType @relation(fields: [drink_type_id], references: [id], onDelete: Cascade)
   favorite Favorite[]
   cart Cart[]
-  sales Sales[]
+  sales SaleDetail[]
 }
 
 model Favorite{
@@ -86,14 +86,22 @@ model Cart{
   drink Drink @relation(fields: [drink_id], references: [id], onDelete: Cascade)
 }
 
-model Sales{
+model Sale{
   id Int @id @default(autoincrement())
   client_id Int
-  drink_id Int
-  price Float
-  quantity Int
   date DateTime @default(now())
 
+  sale_detail SaleDetail[]
   client Client @relation(fields: [client_id], references: [id], onDelete: Cascade)
+}
+
+model SaleDetail{
+  id Int @id @default(autoincrement())
+  sale_id Int
+  drink_id Int
+  quantity Int
+  price Float
+
+  sale Sale @relation(fields: [sale_id], references: [id], onDelete: Cascade)
   drink Drink @relation(fields: [drink_id], references: [id], onDelete: Cascade)
 }

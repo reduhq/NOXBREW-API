@@ -17,8 +17,14 @@ export const createSale = async(client_id:number)=>{
             client_id
         }
     })
+    // Creating a sale Register
+    const sale = await db.sale.create({
+        data:{
+            client_id
+        }
+    })
     ;const items = cart.map(c=>({
-        "client_id":client_id,
+        "sale_id":sale.id,
         'drink_id': c.drink.id,
         'price': c.drink.price,
         'quantity':c.quantity
@@ -29,26 +35,30 @@ export const createSale = async(client_id:number)=>{
             client_id
         }
     })
-    // creating the sales
-    return await db.sales.createManyAndReturn({
+    // creating the saleDetail
+    return await db.saleDetail.createManyAndReturn({
         data:items
     }) 
 }
 
 export const getAllSales = async(client_id:number)=>{
-    return await db.sales.findMany({
+    return await db.sale.findMany({
         select:{
             id:true,
             date:true,
-            drink:{
+            sale_detail:{
                 select:{
                     id:true,
-                    name:true,
-                    image:true
+                    drink:{
+                        select:{
+                            name:true,
+                            image:true
+                        }
+                    },
+                    price:true,
+                    quantity:true
                 }
-            },
-            quantity:true,
-            price:true
+            }
         },
         where:{
             client_id
