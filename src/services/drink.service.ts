@@ -1,6 +1,27 @@
 import {db} from './../db/db.server'
 
-export const getAllPublicDrinks = async()=>{
+export const getAllPublicDrinks = async(category:string)=>{
+    if(category != "todo"){
+        return await db.drink.findMany({
+            select:{
+                id:true,
+                name:true,
+                description:true,
+                image:true,
+                price:true,
+                drink_type:{
+                    select:{
+                        name:true
+                    }
+                },
+            },
+            where:{
+                drink_type:{
+                    name:category
+                }
+            }
+        })
+    }
     return await db.drink.findMany({
         select:{
             id:true,
@@ -17,7 +38,38 @@ export const getAllPublicDrinks = async()=>{
     })
 }
 
-export const getAllPrivateDrinks = async(client_id:number) =>{
+export const getAllPrivateDrinks = async(client_id:number, category:string) =>{
+    if(category != "todo"){
+        return db.drink.findMany({
+            select:{
+                id:true,
+                name:true,
+                description:true,
+                image:true,
+                price:true,
+                drink_type:{
+                    select:{
+                        name:true
+                    }
+                },
+                favorite:{
+                    select:{
+                        id:true,
+                        client_id:true,
+                        drink_id:true
+                    },
+                    where:{
+                        client_id:client_id
+                    }
+                }
+            },
+            where:{
+                drink_type:{
+                    name:category
+                }
+            }
+        })
+    }
     return db.drink.findMany({
         select:{
             id:true,

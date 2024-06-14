@@ -4,14 +4,16 @@ import { getCurrentClient, verifyJWT } from '../utils/deps'
 
 export const drinkRouter = express.Router()
 
-drinkRouter.get('/public', async(_req, res)=>{
-    const drinks = await getAllPublicDrinks()
+drinkRouter.get('/public/:category', async(req, res)=>{
+    const {category} = req.params
+    const drinks = await getAllPublicDrinks(category)
     return res.status(200).json(drinks)
 })
 
-drinkRouter.get('/private', verifyJWT, getCurrentClient, async(_req, res)=>{
+drinkRouter.get('/private/:category', verifyJWT, getCurrentClient, async(req, res)=>{
+    const {category} = req.params
     const {client_model} = res.locals
-    const drinks = await getAllPrivateDrinks(client_model.id)
+    const drinks = await getAllPrivateDrinks(client_model.id, category)
     return res.status(200).json(drinks)
 })
 
