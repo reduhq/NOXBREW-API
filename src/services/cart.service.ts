@@ -2,7 +2,7 @@ import { cartUpdate } from '../types/cart.types'
 import {db} from './../db/db.server'
 
 export const createCart = async(client_id:number, drink_id:number, quantity:number)=>{
-    return db.cart.create({
+    return await db.cart.create({
         data:{
             client_id,
             drink_id,
@@ -17,7 +17,7 @@ export const createCart = async(client_id:number, drink_id:number, quantity:numb
 }
 
 export const getAllCart = async(client_id:number)=>{
-    return db.cart.findMany({
+    return await db.cart.findMany({
         select:{
             id:true,
             drink:{

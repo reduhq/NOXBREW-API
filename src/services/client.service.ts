@@ -5,8 +5,7 @@ import { createUser } from './user.service'
 
 export const createClient = async(client:ClientCreate, user:UserCreate)=>{
     const newUser = await createUser(user)
-
-    return db.client.create({
+    return await db.client.create({
         data:{
             user_id:newUser.id,
             ...client
@@ -31,7 +30,7 @@ export const createClient = async(client:ClientCreate, user:UserCreate)=>{
 }
 
 export const getClientById = async(user_id:number)=>{
-    return db.client.findUnique({
+    return await db.client.findUnique({
         where:{
             user_id:user_id
         },

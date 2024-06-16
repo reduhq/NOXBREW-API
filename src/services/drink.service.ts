@@ -40,7 +40,7 @@ export const getAllPublicDrinks = async(category:string)=>{
 
 export const getAllPrivateDrinks = async(client_id:number, category:string) =>{
     if(category != "todo"){
-        return db.drink.findMany({
+        return await db.drink.findMany({
             select:{
                 id:true,
                 name:true,
@@ -70,7 +70,7 @@ export const getAllPrivateDrinks = async(client_id:number, category:string) =>{
             }
         })
     }
-    return db.drink.findMany({
+    return await db.drink.findMany({
         select:{
             id:true,
             name:true,
@@ -97,7 +97,7 @@ export const getAllPrivateDrinks = async(client_id:number, category:string) =>{
 }
 
 export const getDrinkByName = async(name:string) =>{
-    return db.drink.findFirst({
+    return await db.drink.findFirst({
         where:{
             name:{
                 equals:name,

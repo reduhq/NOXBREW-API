@@ -4,7 +4,7 @@ import {db} from './../db/db.server'
 import { hashPassword, validatePassword } from '../core/security'
 
 export const getById = async (id:number)=>{
-    return db.user.findUnique({
+    return await db.user.findUnique({
         where:{
             id
         }
@@ -12,8 +12,16 @@ export const getById = async (id:number)=>{
 }
 
 export const getByUsername = async (username:string):Promise<User|null>=>{
-    return db.user.findUnique({
+    return await db.user.findUnique({
         where:{username}
+    })
+}
+
+export const getByEmail = async(email:string)=>{
+    return await db.user.findUnique({
+        where:{
+            email
+        }
     })
 }
 

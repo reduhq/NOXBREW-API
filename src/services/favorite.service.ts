@@ -1,7 +1,7 @@
 import {db} from './../db/db.server'
 
 export const createFavorite = async (client_id:number, drink_id:number) =>{
-    return db.favorite.create({
+    return await db.favorite.create({
         data:{
             client_id,
             drink_id
@@ -14,7 +14,7 @@ export const createFavorite = async (client_id:number, drink_id:number) =>{
 }
 
 export const getFavorites = async(client_id:number)=>{
-    return db.favorite.findMany({
+    return await db.favorite.findMany({
         select:{
             drink:{
                 select:{
@@ -43,7 +43,7 @@ export const getFavorites = async(client_id:number)=>{
 }
 
 export const deleteFavorite = async(id:number)=>{
-    return db.favorite.delete({
+    return await db.favorite.delete({
         where:{
             id:id
         },
