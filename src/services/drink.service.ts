@@ -105,3 +105,20 @@ export const getDrinkByName = async(name:string) =>{
     `;
     return result[0]
 }
+
+export const getPublicSearchedDrinks = async(nameStr:string)=>{
+    const result = await db.$queryRaw`
+        SELECT * FROM "Drink"
+        WHERE LOWER(unaccent(name)) LIKE ${'%'+nameStr+'%'}
+    `;
+    return result
+}
+
+export const getPrivateSearchedDrinks = async(nameStr:string, client_id:number|null)=>{
+    const result = await db.$queryRaw`
+    SELECT id, name, description, price, image, (select id from "Favorite" f where f.client_id = ${client_id} and f.drink_id = d.id) as favorite_id
+    FROM "Drink" d
+    WHERE LOWER(unaccent(name)) LIKE ${'%'+nameStr+'%'}
+    `;
+    return result
+}
