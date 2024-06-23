@@ -1,3 +1,4 @@
+import { Drink } from '../types/drink'
 import {db} from './../db/db.server'
 
 export const getAllPublicDrinks = async(category:string)=>{
@@ -97,19 +98,10 @@ export const getAllPrivateDrinks = async(client_id:number, category:string) =>{
 }
 
 export const getDrinkByName = async(name:string) =>{
-    return await db.drink.findFirst({
-        where:{
-            name:{
-                equals:name,
-                mode:'insensitive'
-            }
-        },
-        select:{
-            id:true,
-            name:true,
-            description:true,
-            price:true,
-            image:true
-        }
-    })
+    const result:Array<Drink> = await db.$queryRaw`
+        SELECT * FROM "Drink"
+        WHERE LOWER(unaccent(name)) = ${name}
+        LIMIT 1
+    `;
+    return result[0]
 }

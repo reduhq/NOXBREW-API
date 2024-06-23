@@ -19,8 +19,9 @@ drinkRouter.get('/private/:category', verifyJWT, getCurrentClient, async(req, re
 
 drinkRouter.get("/:drinkName", async(req, res)=>{
     const {drinkName} = req.params
-    const name = drinkName.replace("-", ' ')
-    const drink = await getDrinkByName(name)
+    const name = drinkName.replace(/-/g, ' ')
+    const normalizedName = name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
+    const drink = await getDrinkByName(normalizedName)
     if(!drink) return res.status(404).json("Bebida no encontrada")
     return res.status(200).json(drink)
 })
